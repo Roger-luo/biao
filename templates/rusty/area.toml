@@ -1,5 +1,6 @@
 # Area-Based Labels Template (Rust-style prefixes)
 # Organize issues and PRs by area of the codebase
+# (rusty/area)
 description = "Area labels with A- prefixes"
 
 [[labels]]

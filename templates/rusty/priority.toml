@@ -1,33 +1,34 @@
 # Priority Labels Template (P- prefixes)
 # Rust-style priority labels
+# (rusty/priority)
 description = "Priority labels with P- prefixes"
 
 [[labels]]
 name = "P-critical"
-color = "b60205"
+color = "#b60205"
 description = "Priority: Critical - must be addressed immediately"
 update_if_match = ["priority/critical", "critical", "P0", "Critical"]
 
 [[labels]]
 name = "P-high"
-color = "d73a49"
+color = "#d73a49"
 description = "Priority: High - address soon"
 update_if_match = ["priority/high", "urgent", "P1", "High"]
 
 [[labels]]
 name = "P-medium"
-color = "f0883e"
+color = "#f0883e"
 description = "Priority: Medium - address when available"
 update_if_match = ["priority/medium", "P2", "Medium"]
 
 [[labels]]
 name = "P-low"
-color = "0075ca"
+color = "#0075ca"
 description = "Priority: Low - address eventually"
 update_if_match = ["priority/low", "nice-to-have", "P3", "Low"]
 
 [[labels]]
 name = "P-backlog"
-color = "cccccc"
+color = "#cccccc"
 description = "Priority: Backlog - not currently planned"
 update_if_match = ["priority/backlog", "P4", "Backlog"]

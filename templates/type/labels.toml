@@ -1,5 +1,6 @@
 # Type-Based Labels Template
 # Categorize issues and PRs by type
+# (type/labels)
 description = "Type labels (type/*)"
 
 [[labels]]

@@ -87,6 +87,12 @@ pub enum Commands {
         #[command(subcommand)]
         subcommand: TemplateSubcommands,
     },
+
+    /// Generate shell completions
+    Completion {
+        #[command(subcommand)]
+        subcommand: CompletionSubcommands,
+    },
 }
 
 #[derive(Subcommand)]
@@ -116,6 +122,33 @@ pub enum TemplateSubcommands {
 }
 
 #[derive(Subcommand)]
+pub enum CompletionSubcommands {
+    /// Generate bash completions
+    ///
+    /// Install with:
+    ///   biao completion bash | sudo tee /usr/local/etc/bash_completion.d/biao
+    Bash,
+
+    /// Generate zsh completions
+    ///
+    /// Install with:
+    ///   biao completion zsh | tee /usr/local/share/zsh/site-functions/_biao
+    Zsh,
+
+    /// Generate fish completions
+    ///
+    /// Install with:
+    ///   biao completion fish | tee ~/.config/fish/completions/biao.fish
+    Fish,
+
+    /// Generate elvish completions
+    ///
+    /// Install with:
+    ///   biao completion elvish | tee ~/.config/elvish/rc.elv
+    Elvish,
+}
+
+#[derive(Subcommand)]
 pub enum AuthSubcommands {
     /// Login to GitHub
     Login,
@@ -128,13 +161,16 @@ pub enum AuthSubcommands {
 }
 
 pub async fn execute(args: Args) -> Result<()> {
-    // Auth and Template commands don't need git repo
-    if matches!(args.command, Commands::Auth { .. } | Commands::Template { .. }) {
+    // Auth, Template, and Completion commands don't need git repo
+    if matches!(args.command, Commands::Auth { .. } | Commands::Template { .. } | Commands::Completion { .. }) {
         if let Commands::Auth { subcommand } = args.command {
             return cmd_auth(subcommand).await;
         }
         if let Commands::Template { subcommand } = args.command {
             return cmd_template(subcommand).await;
+        }
+        if let Commands::Completion { subcommand } = args.command {
+            return cmd_completion(subcommand).await;
         }
     }
 
@@ -147,6 +183,7 @@ pub async fn execute(args: Args) -> Result<()> {
     match args.command {
         Commands::Auth { subcommand } => cmd_auth(subcommand).await?,
         Commands::Template { subcommand } => cmd_template(subcommand).await?,
+        Commands::Completion { subcommand } => cmd_completion(subcommand).await?,
         Commands::List => cmd_list(&client).await?,
         Commands::Get { name } => cmd_get(&client, &name).await?,
         Commands::Create {
@@ -340,12 +377,14 @@ async fn cmd_apply(client: &GithubClient, file: &str, dry_run: bool, skip_existi
         for label in &config.labels {
             // First, handle update_if_match: rename matching labels to the new name
             if !label.update_if_match.is_empty() {
+                let mut found_any = false;
                 for old_name in &label.update_if_match {
                     print!("  {} Renaming '{}' → '{}'... ", "↻".blue(), old_name.cyan(), label.name.cyan());
                     
                     if dry_run {
                         println!("{}", "[DRY RUN]".yellow());
                         success_count += 1;
+                        found_any = true;
                     } else {
                         let color = label.color.as_ref().map(|c| normalize_color(c)).transpose()?;
                         let request = UpdateLabelRequest {
@@ -355,6 +394,40 @@ async fn cmd_apply(client: &GithubClient, file: &str, dry_run: bool, skip_existi
                         };
 
                         match client.update_label(old_name, &request).await {
+                            Ok(_) => {
+                                println!("{}", "OK".green());
+                                success_count += 1;
+                                found_any = true;
+                            }
+                            Err(e) => {
+                                let err_msg = format!("{}", e);
+                                if err_msg.contains("Not Found") || err_msg.contains("404") {
+                                    println!("{}", "NOT FOUND".yellow());
+                                } else {
+                                    println!("{}: {}", "FAILED".red(), e);
+                                    error_count += 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // If none of the update_if_match labels were found, create a new label
+                if !found_any && label.color.is_some() {
+                    print!("  {} Creating '{}'... ", "✓".green(), label.name.cyan());
+                    
+                    if dry_run {
+                        println!("{}", "[DRY RUN]".yellow());
+                        success_count += 1;
+                    } else {
+                        let color = normalize_color(label.color.as_ref().unwrap())?;
+                        let request = CreateLabelRequest {
+                            name: label.name.clone(),
+                            color,
+                            description: label.description.clone(),
+                        };
+
+                        match client.create_label(&request).await {
                             Ok(_) => {
                                 println!("{}", "OK".green());
                                 success_count += 1;
@@ -496,6 +569,33 @@ async fn cmd_apply(client: &GithubClient, file: &str, dry_run: bool, skip_existi
 
     if dry_run {
         println!("\n{}", "This was a dry run. No actual changes were made.".yellow());
+    }
+
+    Ok(())
+}
+
+async fn cmd_completion(subcommand: CompletionSubcommands) -> Result<()> {
+    use clap::CommandFactory;
+
+    let mut cmd = Args::command();
+
+    match subcommand {
+        CompletionSubcommands::Bash => {
+            use clap_complete::shells::Bash;
+            clap_complete::generate(Bash, &mut cmd, "biao", &mut std::io::stdout());
+        }
+        CompletionSubcommands::Zsh => {
+            use clap_complete::shells::Zsh;
+            clap_complete::generate(Zsh, &mut cmd, "biao", &mut std::io::stdout());
+        }
+        CompletionSubcommands::Fish => {
+            use clap_complete::shells::Fish;
+            clap_complete::generate(Fish, &mut cmd, "biao", &mut std::io::stdout());
+        }
+        CompletionSubcommands::Elvish => {
+            use clap_complete::shells::Elvish;
+            clap_complete::generate(Elvish, &mut cmd, "biao", &mut std::io::stdout());
+        }
     }
 
     Ok(())

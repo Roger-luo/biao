@@ -4,49 +4,49 @@ description = "Standard GitHub labels"
 
 [[labels]]
 name = "bug"
-color = "d73a49"
+color = "#d73a49"
 description = "Something isn't working"
 update_if_match = ["Bug", "bug-report", "bug", "C-bug"]
 
 [[labels]]
 name = "feature"
-color = "a2eeef"
+color = "#a2eeef"
 description = "New feature or request"
 update_if_match = ["Feature request", "enhancement", "feature", "C-feature"]
 
 [[labels]]
 name = "documentation"
-color = "0075ca"
+color = "#0075ca"
 description = "Improvements or additions to documentation"
 update_if_match = ["docs", "documentation", "C-documentation"]
 
 [[labels]]
 name = "good first issue"
-color = "7057ff"
+color = "#7057ff"
 description = "Good for newcomers"
 update_if_match = ["good-first-issue", "good first issue", "C-good-first-issue"]
 
 [[labels]]
 name = "help wanted"
-color = "008672"
+color = "#008672"
 description = "Extra attention is needed"
 update_if_match = ["help-wanted", "needs-help", "help wanted", "C-help-wanted"]
 
 [[labels]]
 name = "invalid"
-color = "e4e669"
+color = "#e4e669"
 description = "This doesn't seem right"
 update_if_match = ["invalid", "C-invalid"]
 
 [[labels]]
 name = "question"
-color = "d876e3"
+color = "#d876e3"
 description = "Further information is requested"
 update_if_match = ["question", "C-question"]
 
 [[labels]]
 name = "wontfix"
-color = "ffffff"
+color = "#ffffff"
 description = "This will not be worked on"
 update_if_match = ["wontfix", "won't fix", "C-wontfix"]
 
