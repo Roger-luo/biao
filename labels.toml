@@ -1,0 +1,46 @@
+# Example label configuration for biao
+# Run with: biao apply labels.toml
+# Or dry-run: biao apply labels.toml --dry-run
+
+# Delete labels (be careful!)
+delete = ["wontfix", "invalid", "duplicate"]
+
+# Labels to create or update
+# If color is specified, the label will be created (or updated if it exists and update_if_exists = true)
+# If color is omitted, only existing labels will be updated
+
+[[labels]]
+name = "priority-high"
+color = "d73a49"
+description = "High priority issue"
+
+[[labels]]
+name = "priority-medium"
+color = "f0883e"
+description = "Medium priority issue"
+
+[[labels]]
+name = "priority-low"
+color = "0075ca"
+description = "Low priority issue"
+
+# This will skip if 'bug' already exists
+[[labels]]
+name = "bug"
+color = "d73a49"
+description = "Bug report"
+skip_if_exists = true
+
+# This will update 'feature' if it already exists, otherwise create it
+[[labels]]
+name = "feature"
+color = "a2eeef"
+description = "New feature request"
+update_if_exists = true
+
+# Update/rename existing label (no color = update only, will not create)
+# This renames 'enhancement' to 'feature-request'
+[[labels]]
+name = "feature-request"
+update_if_match = ["enhancement"]
+description = "New feature or request"

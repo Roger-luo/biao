@@ -1,0 +1,33 @@
+# Priority-Based Labels Template
+# Use priority levels to triage and prioritize work
+description = "Priority labels (priority/*)"
+
+[[labels]]
+name = "priority/critical"
+color = "b60205"
+description = "Critical priority - must be addressed immediately"
+update_if_match = ["P0", "critical", "P-critical", "priority/critical", "Critical"]
+
+[[labels]]
+name = "priority/high"
+color = "d73a49"
+description = "High priority - address soon"
+update_if_match = ["P1", "urgent", "P-high", "priority/high", "High"]
+
+[[labels]]
+name = "priority/medium"
+color = "f0883e"
+description = "Medium priority - address when available"
+update_if_match = ["P2", "P-medium", "priority/medium", "Medium"]
+
+[[labels]]
+name = "priority/low"
+color = "0075ca"
+description = "Low priority - address eventually"
+update_if_match = ["P3", "nice-to-have", "P-low", "priority/low", "Low"]
+
+[[labels]]
+name = "priority/backlog"
+color = "cccccc"
+description = "Backlog - not currently planned"
+update_if_match = ["P4", "P-backlog", "priority/backlog", "Backlog"]

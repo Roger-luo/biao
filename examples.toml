@@ -1,0 +1,53 @@
+# Comprehensive example showing all label management options
+# Run with: biao apply examples.toml --dry-run
+
+# Delete unwanted labels
+delete = ["wontfix", "invalid", "duplicate"]
+
+# ===== Labels (Create or Update) =====
+# With color: creates new label (or updates if it exists and update_if_exists = true)
+# Without color: only updates existing labels
+
+# Basic label creation with color
+[[labels]]
+name = "priority-high"
+color = "d73a49"
+description = "High priority - immediate attention required"
+
+# Label without description
+[[labels]]
+name = "priority-low"
+color = "0075ca"
+
+# Skip if label already exists (won't fail)
+[[labels]]
+name = "bug"
+color = "d73a49"
+description = "Something isn't working"
+skip_if_exists = true
+
+# Update if label already exists (changes color/description but keeps name)
+[[labels]]
+name = "enhancement"
+color = "a2eeef"
+description = "New feature or request"
+update_if_exists = true
+
+# Update existing label only (no color = won't create new)
+[[labels]]
+name = "documentation"
+description = "Improvements or additions to documentation"
+
+# Update color and description of existing label
+[[labels]]
+name = "good first issue"
+color = "7057ff"
+description = "Good for newcomers"
+
+# Rename existing labels to a new name (and optionally change color/description)
+# This will rename both 'help wanted' and 'help-wanted' to 'needs-help'
+[[labels]]
+name = "needs-help"
+update_if_match = ["help wanted", "help-wanted"]
+color = "008672"
+description = "Extra attention is needed"

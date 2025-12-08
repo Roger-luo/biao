@@ -1,0 +1,43 @@
+# Area-Based Labels Template (Rust-style prefixes)
+# Organize issues and PRs by area of the codebase
+description = "Area labels with A- prefixes"
+
+[[labels]]
+name = "A-api"
+color = "0075ca"
+description = "Area: API"
+
+[[labels]]
+name = "A-cli"
+color = "0075ca"
+description = "Area: CLI"
+
+[[labels]]
+name = "A-docs"
+color = "0075ca"
+description = "Area: Documentation"
+
+[[labels]]
+name = "A-core"
+color = "0075ca"
+description = "Area: Core"
+
+[[labels]]
+name = "A-testing"
+color = "0075ca"
+description = "Area: Testing"
+
+[[labels]]
+name = "A-ci"
+color = "0075ca"
+description = "Area: CI/CD"
+
+[[labels]]
+name = "A-performance"
+color = "fbca04"
+description = "Area: Performance"
+
+[[labels]]
+name = "A-security"
+color = "d73a49"
+description = "Area: Security"

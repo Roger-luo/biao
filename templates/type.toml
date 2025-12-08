@@ -1,0 +1,51 @@
+# Type-Based Labels Template
+# Categorize issues and PRs by type
+description = "Type labels (type/*)"
+
+[[labels]]
+name = "type/bug"
+color = "d73a49"
+description = "Bug report"
+update_if_match = ["bug", "Bug", "type/bug", "T-bug"]
+
+[[labels]]
+name = "type/feature"
+color = "a2eeef"
+description = "Feature request"
+update_if_match = ["feature", "Feature", "type/feature", "T-feature"]
+
+[[labels]]
+name = "type/enhancement"
+color = "a2eeef"
+description = "Enhancement to existing feature"
+update_if_match = ["enhancement", "type/enhancement", "Enhancement", "T-enhancement"]
+
+[[labels]]
+name = "type/docs"
+color = "0075ca"
+description = "Documentation"
+update_if_match = ["docs", "documentation", "type/docs", "T-docs"]
+
+[[labels]]
+name = "type/question"
+color = "d876e3"
+description = "Question or discussion"
+update_if_match = ["question", "discussion", "type/question", "Question", "T-question"]
+
+[[labels]]
+name = "type/test"
+color = "008672"
+description = "Test improvements"
+update_if_match = ["type/test", "tests", "T-test"]
+
+[[labels]]
+name = "type/refactor"
+color = "7057ff"
+description = "Refactoring"
+update_if_match = ["type/refactor", "refactor", "T-refactor"]
+
+[[labels]]
+name = "type/chore"
+color = "cccccc"
+description = "Chores and maintenance"
+update_if_match = ["chore", "type/chore", "Chore", "T-chore"]

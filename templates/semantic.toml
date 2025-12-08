@@ -1,0 +1,51 @@
+# Semantic Release Labels Template
+# Labels following semantic versioning conventions
+description = "Semantic versioning labels"
+
+[[labels]]
+name = "breaking"
+color = "d73a49"
+description = "Breaking change - requires major version bump"
+update_if_match = ["S-breaking"]
+
+[[labels]]
+name = "feature"
+color = "a2eeef"
+description = "New feature - requires minor version bump"
+update_if_match = ["S-feature"]
+
+[[labels]]
+name = "bugfix"
+color = "fbca04"
+description = "Bug fix - requires patch version bump"
+update_if_match = ["S-bugfix"]
+
+[[labels]]
+name = "docs"
+color = "0075ca"
+description = "Documentation updates"
+update_if_match = ["S-docs"]
+
+[[labels]]
+name = "refactor"
+color = "7057ff"
+description = "Code refactoring without feature changes"
+update_if_match = ["S-refactor"]
+
+[[labels]]
+name = "test"
+color = "008672"
+description = "Test additions or improvements"
+update_if_match = ["S-test"]
+
+[[labels]]
+name = "chore"
+color = "cccccc"
+description = "Maintenance or tool updates"
+update_if_match = ["S-chore"]
+
+[[labels]]
+name = "ci"
+color = "e4e669"
+description = "CI/CD and automation changes"
+update_if_match = ["S-ci"]

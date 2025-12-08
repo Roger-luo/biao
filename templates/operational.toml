@@ -1,0 +1,28 @@
+# Operational Labels Template (O- prefixes)
+# Operational workstreams and meta items
+description = "Operational labels with O- prefixes"
+
+[[labels]]
+name = "O-hiring"
+color = "0075ca"
+description = "Operational: Hiring and staffing"
+
+[[labels]]
+name = "O-roadmap"
+color = "a2eeef"
+description = "Operational: Roadmap and planning"
+
+[[labels]]
+name = "O-incident"
+color = "d73a49"
+description = "Operational: Incident response and follow-up"
+
+[[labels]]
+name = "O-maintenance"
+color = "cccccc"
+description = "Operational: Maintenance and chores"
+
+[[labels]]
+name = "O-compliance"
+color = "e4e669"
+description = "Operational: Compliance, audits, and risk"
