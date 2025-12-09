@@ -377,6 +377,20 @@ async fn cmd_apply(client: &GithubClient, file: &str, dry_run: bool, skip_existi
         for label in &config.labels {
             // First, handle update_if_match: rename matching labels to the new name
             if !label.update_if_match.is_empty() {
+                // Check if the target label already exists
+                let target_exists = if !dry_run {
+                    client.get_label(&label.name).await.is_ok()
+                } else {
+                    false
+                };
+
+                if target_exists {
+                    print!("  {} Label '{}' ", "→".blue(), label.name.cyan());
+                    println!("{}", "ALREADY EXISTS".yellow());
+                    skipped_count += 1;
+                    continue;
+                }
+
                 let mut found_any = false;
                 for old_name in &label.update_if_match {
                     print!("  {} Renaming '{}' → '{}'... ", "↻".blue(), old_name.cyan(), label.name.cyan());
